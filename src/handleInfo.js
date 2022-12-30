@@ -28,9 +28,7 @@ module.exports = async function handleInfo(_twitter, _tweet) {
       replyBalances(_twitter, _tweet, balanceMessage, balance.uri);
     }
   } catch (err) {
-    // get first 280 characters of error message
-    const message = err.message.slice(0, 280);
-    _twitter.v2.reply(message, _tweet.data.id);
+    _twitter.v2.reply("Error Code: 44196397", _tweet.data.id);
   }
 };
 

@@ -22,8 +22,6 @@ module.exports = async function handleSetAccount(_twitter, _tweet) {
     // reply with message
     _twitter.v2.reply(message, _tweet.data.id);
   } catch (err) {
-    // get first 280 characters of error message
-    const message = err.message.slice(0, 280);
-    _twitter.v2.reply(message, _tweet.data.id);
+    _twitter.v2.reply("Error Code: 295218901", _tweet.data.id);
   }
 };
