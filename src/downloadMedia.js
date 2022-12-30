@@ -7,10 +7,14 @@ const axios = require("axios");
  * @returns {Promise<path>}
  * */
 module.exports = async function getFile(_url) {
-  const name = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER); // random name
-  const extension = _url.split(".").pop(); // get extension from url
-  const path = `./media/${name}.${extension}`; // path to save file
-  const response = await axios.get(_url, { responseType: "arraybuffer" }); // get file
-  fs.writeFileSync(path, response.data); // write file
-  return path; // return path
+  try {
+    const name = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER); // random name
+    const extension = _url.split(".").pop(); // get extension from url
+    const path = `./media/${name}.${extension}`; // path to save file
+    const response = await axios.get(_url, { responseType: "arraybuffer" }); // get file
+    fs.writeFileSync(path, response.data); // write file
+    return path; // return path
+  } catch (error) {
+    return "./media/_default.jpg";
+  }
 };
