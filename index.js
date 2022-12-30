@@ -1,10 +1,8 @@
 const twitter = require("./src/twitter");
+const handleRegister = require("./src/handleRegister");
 
 main();
 async function main() {
-  // Get user (me)
-  const currentUser = twitter.currentUser();
-
   // https://github.com/PLhery/node-twitter-api-v2/blob/36821932dbde93129168e8b47af4e1e377552bde/doc/basics.md#create-a-client
   const login = await twitter.appLogin();
 
@@ -13,7 +11,7 @@ async function main() {
 
   // Add rules
   await login.v2.updateStreamRules({
-    add: [{ value: "JavaScript" }],
+    add: [{ value: "@dexoshi" }],
   });
 
   // https://github.com/PLhery/node-twitter-api-v2/blob/c8dacc7c0f85bc45a41c678dfeee1ebde31dd451/doc/streaming.md#specific-api-v2-implementations
@@ -26,10 +24,11 @@ async function main() {
   stream.autoReconnect = true;
 
   stream.on("data event content", async (tweet) => {
-    // Ignore retweets or self-sent tweets
-    const isRetweet = tweet.data.referenced_tweets?.some((tweet) => tweet.type === "retweeted") ?? false;
-    if (isRetweet || tweet.data.author_id === currentUser) return;
+    // console.log("\n", JSON.stringify(tweet, null, 2));
+    const command = tweet.data.text.split(" ")[1];
 
-    console.log("tweet", JSON.stringify(tweet, null, 2));
+    if (command == "register") {
+      handleRegister(twitter, tweet);
+    }
   });
 }
