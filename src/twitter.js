@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { TwitterApi } = require("twitter-api-v2");
 
 // https://www.npmjs.com/package/twitter-api-v2
