@@ -1,6 +1,5 @@
 require("dotenv").config();
 const twitter = require("./src/twitter");
-const handleSetAccount = require("./src/handleSetAccount");
 const handleInfo = require("./src/handleInfo");
 
 main();
@@ -29,7 +28,7 @@ async function main() {
     // console.log("\n", JSON.stringify(tweet, null, 2));
     const command = tweet.data.text.split(" ")[1];
 
-    if (command === "register") handleSetAccount(twitter, tweet);
+    // the 🥩 & 🥔
     if (command === "info") handleInfo(twitter, tweet);
   });
 }

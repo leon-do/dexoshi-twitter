@@ -2,20 +2,6 @@
 
 ## Tweet Commands
 
-### Register 
-
-`register` connects a twitter handle to a address. Similar to creating a new account.
-
-Tweet: 
-```
-@dexoshi register 0x1231231231231231231231231231231231231231
-```
-
-Reply: 
-```
-@elonmusk has regestered address 0x1231231231231231231231231231231231231231
-```
-
 ### Info
 
 `info <TWITTER_HANDLE>` creates a thread of a user's cards

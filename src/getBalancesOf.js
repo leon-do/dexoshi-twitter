@@ -19,6 +19,8 @@ module.exports = async function getBalancesOf(_address) {
 
     const response = await axios.post(process.env.SUBGRAPH_URL, { query });
 
+    if (response.data.data.erc1155Tokens.balances.length == 0) return [];
+
     const balancesOf = response.data.data.erc1155Tokens.map((val) => ({
       tokenId: val.identifier,
       amount: val.balances[0].valueExact,

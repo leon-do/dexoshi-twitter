@@ -17,22 +17,23 @@ module.exports = async function handleInfo(_twitter, _tweet) {
     const handle = _tweet.data.text.split(" ")[2].split("@")[1];
     // get twitter user Id
     const user = await _twitter.v2.usersByUsernames([handle]);
-    // call "accounts" to get address on chain
-    const address = await contract["accounts"](user.data[0].id);
+    // call "twitterIdToAddress" to get address on chain
+    const address = await contract["twitterIdToAddress"](user.data[0].id);
     // query the graph
     const balances = await getBalancesOf(address);
-
+    // reply with overview
+    await _twitter.v2.reply(`User: ${user} \nAddress: ${address} \nTotal: ${balances.length}`, _tweet.data.id);
     // reply with message
     for (let balance of balances) {
-      const balanceMessage = `Token ID: ${balance.tokenId} \nAmount: ${balance.amount}`;
-      replyBalances(_twitter, _tweet, balanceMessage, balance.uri);
+      const balanceMessage = `ID: ${balance.tokenId} \nAmount: ${balance.amount}`;
+      replyThread(_twitter, _tweet, balanceMessage, balance.uri);
     }
   } catch (err) {
     _twitter.v2.reply("Error Code: 44196397", _tweet.data.id);
   }
 };
 
-async function replyBalances(_twitter, _tweet, _message, _uri) {
+async function replyThread(_twitter, _tweet, _message, _uri) {
   // tweet image
   let mediaPath;
   try {
