@@ -7,7 +7,9 @@ module.exports = async function getBalancesOf(_address) {
   try {
     const query = `
     {
-      erc1155Balances(where: {account: "${_address}"}) {
+      erc1155Balances(
+        where: {account: "${_address}", valueExact_gt: "0"}
+      ) {
         token {
           identifier
           uri
