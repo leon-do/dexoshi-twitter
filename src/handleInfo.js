@@ -2,6 +2,7 @@ const { contract } = require("./contract.js");
 const getBalancesOf = require("./getBalancesOf.js");
 const downloadMedia = require("./downloadMedia");
 const deleteMedia = require("./deleteMedia");
+const metadata = require("./metadata.json");
 
 /*
  * When player tweets "@dexoshi info @elonmusk", reply with players info
@@ -20,10 +21,11 @@ module.exports = async function handleInfo(_twitter, _tweet) {
     const balances = await getBalancesOf(address);
     // reply with overview
     await _twitter.v2.reply(`User: ${handle} \nAddress: ${address} \nTotal: ${balances.length}`, _tweet.data.id);
-    // reply with balances 
+    // reply with balances
     for (let balance of balances) {
       const balanceMessage = `ID: ${balance.tokenId} \nAmount: ${balance.amount}`;
-      replyThread(_twitter, _tweet, balanceMessage, balance.uri);
+      const imageUri = metadata[balance.tokenId].gateway;
+      replyThread(_twitter, _tweet, balanceMessage, imageUri);
     }
   } catch (err) {
     _twitter.v2.reply("Error Code: 44196397", _tweet.data.id);
