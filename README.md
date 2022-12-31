@@ -3,17 +3,20 @@
 ## Tweet Commands
 
 ```
-# Get info about @user
+🤓 Get info
 @dexoshi info <@TWITTER_HANDLE>
 
-# Gift to @user token ID #1
-@dexoshi gift <@TWITTER_HANDLE> 1
+🎁 Gift a token
+@dexoshi gift <@TWITTER_HANDLE> <TOKEN_ID>
 
-# Burn token ID 1
+🫶 Merge token 1 + 2 = 3
+@dexoshi burn <TOKEN_ID_1> <TOKEN_ID_2>
+
+📨 Transfer to address
+@dexoshi transfer <0xADDRESS> <TOKEN_ID> <AMOUNT>
+
+🔥 Burn token
 @dexoshi burn <TOKEN_ID>
-
-# Transfer to 0x address
-@dexoshi trasnfer <ADDRESS> <TOKEN_ID> <AMOUNT>
 ```
 
 ## Metadata

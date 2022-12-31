@@ -5,7 +5,7 @@ const displayCard = require("./displayCard.js");
 
 /*
  * When player tweets "@dexoshi merge 1 2", merge 1 + 2 to get 3
- * https://user-images.githubusercontent.com/19412160/210153490-cf3244a8-18bd-4bf1-a53f-4b44fca9b177.png
+ * https://user-images.githubusercontent.com/19412160/210154115-78f83489-7e56-4f7f-99fc-d52fd231fab5.png
  * @param {Object} _twitter - _twitter API client
  * @param {Object} _tweet - Tweet object
  * */

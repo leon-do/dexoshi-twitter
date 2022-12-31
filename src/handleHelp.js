@@ -5,13 +5,13 @@ module.exports = async function handleHelp(_twitter, _tweet) {
   const message = `
 🤓 Get info
 @dexoshi info <@TWITTER_HANDLE>
-
+  
 🎁 Gift a token
 @dexoshi gift <@TWITTER_HANDLE> <TOKEN_ID>
-
-🔥 Burn a token
-@dexoshi burn <TOKEN_ID>
-
+  
+🫶 Merge token 1 + 2 = 3
+@dexoshi burn <TOKEN_ID_1> <TOKEN_ID_2>
+  
 📨 Transfer to address
 @dexoshi transfer <0xADDRESS> <TOKEN_ID> <AMOUNT>
 `;
