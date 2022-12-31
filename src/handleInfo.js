@@ -20,7 +20,7 @@ module.exports = async function handleInfo(_twitter, _tweet) {
     const balances = await getBalancesOf(address);
     // reply with overview
     await _twitter.v2.reply(`User: ${handle} \nAddress: ${address} \nTotal: ${balances.length}`, _tweet.data.id);
-    // reply with message
+    // reply with balances 
     for (let balance of balances) {
       const balanceMessage = `ID: ${balance.tokenId} \nAmount: ${balance.amount}`;
       replyThread(_twitter, _tweet, balanceMessage, balance.uri);
