@@ -10,9 +10,6 @@ const deleteMedia = require("./deleteMedia");
  * */
 module.exports = async function handleInfo(_twitter, _tweet) {
   try {
-    // Ignore retweets or self-sent tweets
-    const isRetweet = _tweet.data.referenced_tweets?.some((_tweet) => _tweet.type === "retweeted") ?? false;
-    if (isRetweet || _tweet.data.author_id === _twitter.currentUser()) return;
     // get twitter handle
     const handle = _tweet.data.text.split(" ")[2].split("@")[1];
     // get twitter user Id
@@ -22,7 +19,7 @@ module.exports = async function handleInfo(_twitter, _tweet) {
     // query the graph
     const balances = await getBalancesOf(address);
     // reply with overview
-    await _twitter.v2.reply(`User: ${user} \nAddress: ${address} \nTotal: ${balances.length}`, _tweet.data.id);
+    await _twitter.v2.reply(`User: ${handle} \nAddress: ${address} \nTotal: ${balances.length}`, _tweet.data.id);
     // reply with message
     for (let balance of balances) {
       const balanceMessage = `ID: ${balance.tokenId} \nAmount: ${balance.amount}`;

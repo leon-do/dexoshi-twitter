@@ -6,34 +6,16 @@
 
 `info <TWITTER_HANDLE>` creates a thread of a user's cards
 
-Tweet: 
+Commands:
+
 ```
+# Get @elonmusk's info
 @dexoshi info @elonmusk
+
+# Send to @elonmusk card ID #1
+@dexoshi send @elonmusk 1
 ```
 
-Reply Thread: 
-```
-elonmusk owns 2 cards:
-```
-
-```
-Card 442
-/  \.-"""-./  \
-\    -   -    /
- |   o   o   |
- \  .-'''-.  /
-  '-\__Y__/-'
-     `---`
-```
-
-```
-Card 112
-\|/          (__)    
-     `\------(oo)
-       ||    (__)
-       ||w--||     \|/
-   \|/
-```
 ## Docs
 
 ```javascript

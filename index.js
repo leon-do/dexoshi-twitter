@@ -1,6 +1,7 @@
 require("dotenv").config();
 const twitter = require("./src/twitter");
 const handleInfo = require("./src/handleInfo");
+const handleTransfer = require("./src/handleTransfer");
 
 main();
 async function main() {
@@ -25,10 +26,15 @@ async function main() {
   stream.autoReconnect = true;
 
   stream.on("data event content", async (tweet) => {
+    // Ignore retweets or self-sent tweets
+    const isRetweet = tweet.data.referenced_tweets?.some((_tweet) => tweet.type === "retweeted") ?? false;
+    if (isRetweet || tweet.data.author_id === twitter.currentUser()) return;
+
     // console.log("\n", JSON.stringify(tweet, null, 2));
     const command = tweet.data.text.split(" ")[1];
 
     // the 🥩 & 🥔
     if (command === "info") handleInfo(twitter, tweet);
+    if (command === "send") handleTransfer(twitter, tweet);
   });
 }

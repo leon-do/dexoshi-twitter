@@ -6,25 +6,23 @@ const axios = require("axios");
 module.exports = async function getBalancesOf(_address) {
   try {
     const query = `
-      {
-        erc1155Tokens {
-          uri
-          balances(where: {account: "${_address}"}) {
-            valueExact
-          }
+    {
+      erc1155Balances(where: {account: "${_address}"}) {
+        token {
           identifier
+          uri
         }
+        valueExact
       }
+    }
     `;
 
     const response = await axios.post(process.env.SUBGRAPH_URL, { query });
 
-    if (response.data.data.erc1155Tokens.balances.length == 0) return [];
-
-    const balancesOf = response.data.data.erc1155Tokens.map((val) => ({
-      tokenId: val.identifier,
-      amount: val.balances[0].valueExact,
-      uri: val.uri,
+    const balancesOf = response.data.data.erc1155Balances.map((val) => ({
+      tokenId: val.token.identifier,
+      amount: val.valueExact,
+      uri: val.token.uri,
     }));
 
     return balancesOf;
