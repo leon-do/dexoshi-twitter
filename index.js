@@ -4,6 +4,7 @@ const handleBurn = require("./src/handleBurn");
 const handleGift = require("./src/handleGift");
 const handleHelp = require("./src/handleHelp");
 const handleInfo = require("./src/handleInfo");
+const handleMerge = require("./src/handleMerge");
 const handleTransfer = require("./src/handleTransfer");
 
 main();
@@ -43,6 +44,7 @@ async function main() {
     if (command === "gift") handleGift(twitter, tweet);
     if (command === "help") handleHelp(twitter, tweet);
     if (command === "info") handleInfo(twitter, tweet);
+    if (command === "merge") handleMerge(twitter, tweet);
     if (command === "transfer") handleTransfer(twitter, tweet);
   });
 }

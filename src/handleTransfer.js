@@ -24,6 +24,6 @@ module.exports = async function handleTransfer(_twitter, _tweet) {
     await _twitter.v2.reply(message, _tweet.data.id);
   } catch (err) {
     console.error(err);
-    _twitter.v2.reply("Error Code: 3278906401", _tweet.data.id);
+    _twitter.v2.reply("Error Code: 2916954277", _tweet.data.id);
   }
 };

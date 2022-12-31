@@ -1,4 +1,5 @@
 const { contract } = require("./contract.js");
+const displayCard = require("./displayCard.js");
 
 /*
  * When player tweets "@dexoshi gift @elonmusk", reply with tx hash
@@ -24,8 +25,10 @@ module.exports = async function handleGift(_twitter, _tweet) {
     // reply with tx hash
     const message = `@${fromHandle.data[0].username} transfered ID: ${tokenId} to @${toHandle}. ${process.env.BLOCK_EXPLORER}/tx/${receipt.hash}`;
     await _twitter.v2.reply(message, _tweet.data.id);
+    // display card
+    await displayCard(_twitter, _tweet, tokenId);
   } catch (err) {
     console.error(err);
-    _twitter.v2.reply("Error Code: 20416855", _tweet.data.id);
+    _twitter.v2.reply("Error Code: 900437084321832960", _tweet.data.id);
   }
 };

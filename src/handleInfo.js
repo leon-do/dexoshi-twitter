@@ -1,11 +1,9 @@
-const { contract } = require("./contract.js");
-const getBalancesOf = require("./getBalancesOf.js");
-const downloadMedia = require("./downloadMedia");
-const deleteMedia = require("./deleteMedia");
-const metadata = require("./metadata.json");
+const { contract } = require("./contract");
+const displayCards = require("./displayCards");
 
 /*
  * When player tweets "@dexoshi info @elonmusk", reply with players info
+ * https://user-images.githubusercontent.com/19412160/210154006-53c35d08-50b3-40d1-9858-95dc54fa29f5.png
  * @param {Object} _twitter - _twitter API client
  * @param {Object} _tweet - Tweet object
  * */
@@ -17,30 +15,11 @@ module.exports = async function handleInfo(_twitter, _tweet) {
     const user = await _twitter.v2.usersByUsernames([handle]);
     // call "twitterIdToAddress" to get address on chain
     const address = await contract["twitterIdToAddress"](user.data[0].id);
-    // query the graph
-    const balances = await getBalancesOf(address);
     // reply with overview
-    await _twitter.v2.reply(`User: ${handle} \nAddress: ${address} \nTotal: ${balances.length}`, _tweet.data.id);
-    // reply with balances
-    for (let balance of balances) {
-      const balanceMessage = `ID: ${balance.tokenId} \nAmount: ${balance.amount}`;
-      const imageUri = metadata[balance.tokenId].gateway;
-      replyThread(_twitter, _tweet, balanceMessage, imageUri);
-    }
+    await _twitter.v2.reply(`User: ${handle} \nAddress: ${address}`, _tweet.data.id);
+    // reply with cards
+    await displayCards(_twitter, _tweet, address);
   } catch (err) {
-    _twitter.v2.reply("Error Code: 44196397", _tweet.data.id);
+    _twitter.v2.reply("Error Code: 1101264495337365504", _tweet.data.id);
   }
 };
-
-async function replyThread(_twitter, _tweet, _message, _uri) {
-  // tweet image
-  let mediaPath;
-  try {
-    mediaPath = await downloadMedia(_uri);
-    const mediaId = await _twitter.v1.uploadMedia(mediaPath);
-    // https://github.com/PLhery/node-twitter-api-v2/blob/e56d7811363df193abcd141440c4fbe472bc2279/src/types/v2/tweet.definition.v2.ts#L175
-    await _twitter.v2.reply(_message, _tweet.data.id, { media: { media_ids: [mediaId] } });
-  } finally {
-    await deleteMedia(mediaPath);
-  }
-}
