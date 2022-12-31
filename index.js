@@ -2,6 +2,7 @@ require("dotenv").config();
 const twitter = require("./src/twitter");
 const handleInfo = require("./src/handleInfo");
 const handleTransfer = require("./src/handleTransfer");
+const handleBurn = require("./src/handleBurn");
 
 main();
 async function main() {
@@ -31,10 +32,13 @@ async function main() {
     if (isRetweet || tweet.data.author_id === twitter.currentUser()) return;
 
     // console.log("\n", JSON.stringify(tweet, null, 2));
+
+    // example tweet to get info: "@dexoshi info"
     const command = tweet.data.text.split(" ")[1];
 
     // the 🥩 & 🥔
     if (command === "info") handleInfo(twitter, tweet);
     if (command === "send") handleTransfer(twitter, tweet);
+    if (command === "burn") handleBurn(twitter, tweet);
   });
 }

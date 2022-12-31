@@ -27,7 +27,7 @@ module.exports = async function getBalancesOf(_address) {
 
     return balancesOf;
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return [];
   }
 };
