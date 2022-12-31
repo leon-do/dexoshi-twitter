@@ -9,11 +9,17 @@
 Commands:
 
 ```
-# Get @elonmusk's info
-@dexoshi info @elonmusk
+# Get info about @user
+@dexoshi info <@TWITTER_HANDLE>
 
-# Send to @elonmusk card ID #1
-@dexoshi send @elonmusk 1
+# Gift to @user token ID #1
+@dexoshi gift <@TWITTER_HANDLE> 1
+
+# Burn token ID 1
+@dexoshi burn <TOKEN_ID>
+
+# Transfer to 0x address
+@dexoshi trasnfer <ADDRESS> <TOKEN_ID> <AMOUNT>
 ```
 
 ## Docs

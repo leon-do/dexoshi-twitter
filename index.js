@@ -1,8 +1,10 @@
 require("dotenv").config();
 const twitter = require("./src/twitter");
+const handleBurn = require("./src/handleBurn");
+const handleGift = require("./src/handleGift");
+const handleHelp = require("./src/handleHelp");
 const handleInfo = require("./src/handleInfo");
 const handleTransfer = require("./src/handleTransfer");
-const handleBurn = require("./src/handleBurn");
 
 main();
 async function main() {
@@ -37,8 +39,10 @@ async function main() {
     const command = tweet.data.text.split(" ")[1];
 
     // the 🥩 & 🥔
-    if (command === "info") handleInfo(twitter, tweet);
-    if (command === "send") handleTransfer(twitter, tweet);
     if (command === "burn") handleBurn(twitter, tweet);
+    if (command === "gift") handleGift(twitter, tweet);
+    if (command === "help") handleHelp(twitter, tweet);
+    if (command === "info") handleInfo(twitter, tweet);
+    if (command === "transfer") handleTransfer(twitter, tweet);
   });
 }
