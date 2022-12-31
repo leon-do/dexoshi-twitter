@@ -48,3 +48,7 @@ async function tweet() {
   }
 }
 ```
+
+## Metadata
+
+https://nftstorage.link/ipfs/bafybeie7bjhof6patydr7i6nv5cj4tbujz2t3ahazxaie5rvyjdnduoq4m/16103.json
