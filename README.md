@@ -6,7 +6,7 @@
 🤓 Get info
 @dexoshi info <@TWITTER_HANDLE>
 
-🎁 Gift a token
+🎁 Gift token
 @dexoshi gift <@TWITTER_HANDLE> <TOKEN_ID>
 
 🫶 Merge token 1 + 2 = 3
