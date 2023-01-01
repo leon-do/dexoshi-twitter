@@ -23,7 +23,7 @@ module.exports = async function handleMerge(_twitter, _tweet) {
     // burn merged tokens
     await burnTokens(address, tokenIds);
     // calculate new tokenId
-    const newTokenId = tokenIds.reduce((a, b) => Number(a) + Number(b), 0) % metadata.length;
+    const newTokenId = tokenIds.reduce((a, b) => Number(a) * Number(b), 1) % metadata.length;
     // mint new token
     const tokenUri = `${process.env.TOKEN_URI}/${String(newTokenId).padStart(5, "0")}.json`;
     const receipt = await contract["adminMint"](address, newTokenId, 1, tokenUri);

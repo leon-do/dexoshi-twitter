@@ -9,7 +9,7 @@ module.exports = async function handleHelp(_twitter, _tweet) {
 🎁 Gift token
 @dexoshi gift <@TWITTER_HANDLE> <TOKEN_ID>
   
-🫶 Merge token 1 + 2 = 3
+🫶 Merge token 2 + 3 = 6
 @dexoshi burn <TOKEN_ID_1> <TOKEN_ID_2>
   
 📨 Transfer to address
