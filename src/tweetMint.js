@@ -1,8 +1,13 @@
+require("dotenv").config();
 const twitter = require("./twitter");
-const displayCard = require("./displayCard");
+const tweetWithCard = require("./tweetWithCard");
+const metadata = require("./metadata.json");
 
-module.exports = async function tweetMint() {
-  const tokenId = 0;
-  const tweet = await twitter.v2.tweet(`@dexoshi mint ${tokenId} is available. \nRetweet for free claim`);
-  await displayCard(twitter, tweet, 0);
-};
+async function tweetMint() {
+  const tokenId = 55;
+  const description = metadata[tokenId].description
+  const message = `@dexoshi mint available \nName: ${description} \nCard ID: ${tokenId}. \n\nRetweet to claim`;
+  tweetWithCard(twitter, message, tokenId);
+}
+
+tweetMint();

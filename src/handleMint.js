@@ -1,5 +1,6 @@
 const { contract } = require("./contract");
-const displayCard = require("./displayCard");
+const replyWithCard = require("./replyWithCard");
+const metadata = require("./metadata.json");
 
 /*
  * Example tweet to mint: "RT @dexoshi: @dexoshi mint 8"
@@ -12,12 +13,16 @@ module.exports = async function handleMint(_twitter, _tweet) {
   const toAddress = await contract["twitterIdToAddress"](_tweet.data.author_id);
   // get tokenId from command: "RT @dexoshi: @dexoshi mint 8"
   const tokenId = _tweet.data.text.split(" ")[4];
+  // only mint if balance is 0
+  const balanceOf = await contract["balanceOf"](toAddress, tokenId);
+  if (balanceOf > 0) return _twitter.v2.reply(`Mint Error: @${toHandle.data[0].username} already owns \nCard ID: ${tokenId}.`, _tweet.data.id);
+  // get description
+  const description = metadata[tokenId].description;
   // mint new token
   const tokenUri = `${process.env.TOKEN_URI}/${String(tokenId).padStart(5, "0")}.json`;
   const { hash } = await contract["adminMint"](toAddress, tokenId, 1, tokenUri);
   // reply with tx hash
-  const message = `Card ID: ${tokenId} is minted to @${toHandle.data[0].username}. ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
-  await _twitter.v2.reply(message, _tweet.data.id);
+  const message = `@${toHandle.data[0].username} recieved \nName: ${description} \nCard ID: ${tokenId} ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
   // display card
-  await displayCard(_twitter, _tweet, tokenId);
+  await replyWithCard(_twitter, _tweet, message, tokenId);
 };

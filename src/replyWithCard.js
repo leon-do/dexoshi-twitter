@@ -3,21 +3,19 @@ const downloadMedia = require("./downloadMedia");
 const deleteMedia = require("./deleteMedia");
 
 /*
- * Reply with 1 card owned by player
+ * Reply with message and image of card 
  * @param {Object} _twitter - _twitter API client
  * @param {Object} _tweet - Tweet object
  * @param {String} _tokenId - Token ID of card
  * */
-module.exports = async function displayCard(_twitter, _tweet, _tokenId) {
+module.exports = async function replyWithCard(_twitter, _tweet, _message, _tokenId) {
   const imageUri = metadata[_tokenId].cacheImage;
-  const name = metadata[_tokenId].description;
   let mediaPath;
   try {
     mediaPath = await downloadMedia(imageUri);
     const mediaId = await _twitter.v1.uploadMedia(mediaPath);
-    const message = `${name} \nCard ID: ${_tokenId}`;
     // https://github.com/PLhery/node-twitter-api-v2/blob/e56d7811363df193abcd141440c4fbe472bc2279/src/types/v2/tweet.definition.v2.ts#L175
-    await _twitter.v2.reply(message, _tweet.data.id, { media: { media_ids: [mediaId] } });
+    await _twitter.v2.reply(_message, _tweet.data.id, { media: { media_ids: [mediaId] } });
   } finally {
     await deleteMedia(mediaPath);
   }

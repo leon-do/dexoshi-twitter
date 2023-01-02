@@ -1,6 +1,6 @@
 const { contract } = require("./contract");
 const getBalancesOf = require("./getBalancesOf");
-const displayCard = require("./displayCard");
+const replyWithCard = require("./replyWithCard");
 const metadata = require("./metadata.json");
 
 /*
@@ -24,14 +24,15 @@ module.exports = async function handleMerge(_twitter, _tweet) {
     await burnTokens(address, tokenIds);
     // calculate new tokenId
     const newTokenId = tokenIds.reduce((a, b) => Number(a) * Number(b), 1) % metadata.length;
+    // get descripton 
+    const description = metadata[tokenId].description;
     // mint new token
     const tokenUri = `${process.env.TOKEN_URI}/${String(newTokenId).padStart(5, "0")}.json`;
     const { hash } = await contract["adminMint"](address, newTokenId, 1, tokenUri);
     // reply with tx hash
-    const message = `@${fromHandle.data[0].username} merged ${tokenIds.join(" + ")} to get Card ID: ${newTokenId} ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
-    await _twitter.v2.reply(message, _tweet.data.id);
+    const message = `@${fromHandle.data[0].username} merged ${tokenIds.join(" + ")} to get \nName: ${description} \nCard ID: ${newTokenId} ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     // reply with card
-    await displayCard(_twitter, _tweet, newTokenId);
+    await replyWithCard(_twitter, _tweet, message, newTokenId);
   } catch (err) {
     console.error(err);
     _twitter.v2.reply("Error Code: 1098445789368479744", _tweet.data.id);

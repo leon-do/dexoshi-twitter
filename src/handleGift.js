@@ -1,5 +1,6 @@
 const { contract } = require("./contract");
-const displayCard = require("./displayCard");
+const replyWithCard = require("./replyWithCard");
+const metadata = require("./metadata.json");
 
 /*
  * When player tweets "@dexoshi gift @elonmusk", reply with tx hash
@@ -20,13 +21,14 @@ module.exports = async function handleGift(_twitter, _tweet) {
     const toAddress = await contract["twitterIdToAddress"](toUser.data[0].id.toString());
     // get tokenId
     const tokenId = _tweet.data.text.split(" ")[3];
+    // get description
+    const description = metadata[tokenId].description;
     // call "adminSafeTransferFrom"
     const { hash } = await contract["adminSafeTransferFrom"](fromAddress, toAddress, tokenId, 1);
     // reply with tx hash
-    const message = `@${fromHandle.data[0].username} gifted Card ID: ${tokenId} to @${toHandle}. ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
-    await _twitter.v2.reply(message, _tweet.data.id);
+    const message = `@${fromHandle.data[0].username} gifted \nName: ${description} \nCard ID: ${tokenId} \nTo: @${toHandle} ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     // display card
-    await displayCard(_twitter, _tweet, tokenId);
+    await replyWithCard(_twitter, _tweet, message, tokenId);
   } catch (err) {
     console.error(err);
     _twitter.v2.reply("Error Code: 900437084321832960", _tweet.data.id);
