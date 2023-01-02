@@ -23,7 +23,7 @@ module.exports = async function handleGift(_twitter, _tweet) {
     // call "adminSafeTransferFrom"
     const { hash } = await contract["adminSafeTransferFrom"](fromAddress, toAddress, tokenId, 1);
     // reply with tx hash
-    const message = `@${fromHandle.data[0].username} gifted ID: ${tokenId} to @${toHandle}. ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
+    const message = `@${fromHandle.data[0].username} gifted Card ID: ${tokenId} to @${toHandle}. ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     await _twitter.v2.reply(message, _tweet.data.id);
     // display card
     await displayCard(_twitter, _tweet, tokenId);
