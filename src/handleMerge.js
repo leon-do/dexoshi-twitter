@@ -1,10 +1,10 @@
-const { contract } = require("./contract.js");
+const { contract } = require("./contract");
+const getBalancesOf = require("./getBalancesOf");
+const displayCard = require("./displayCard");
 const metadata = require("./metadata.json");
-const getBalancesOf = require("./getBalancesOf.js");
-const displayCard = require("./displayCard.js");
 
 /*
- * When player tweets "@dexoshi merge 1 2", merge 1 + 2 to get 3
+ * When player tweets "@dexoshi merge 1 2", merge 1 & 2
  * https://user-images.githubusercontent.com/19412160/210154115-78f83489-7e56-4f7f-99fc-d52fd231fab5.png
  * @param {Object} _twitter - _twitter API client
  * @param {Object} _tweet - Tweet object
@@ -26,9 +26,9 @@ module.exports = async function handleMerge(_twitter, _tweet) {
     const newTokenId = tokenIds.reduce((a, b) => Number(a) * Number(b), 1) % metadata.length;
     // mint new token
     const tokenUri = `${process.env.TOKEN_URI}/${String(newTokenId).padStart(5, "0")}.json`;
-    const receipt = await contract["adminMint"](address, newTokenId, 1, tokenUri);
+    const { hash } = await contract["adminMint"](address, newTokenId, 1, tokenUri);
     // reply with tx hash
-    const message = `@${fromHandle.data[0].username} merged ${tokenIds.join(" + ")} to get ID: ${newTokenId} ${process.env.BLOCK_EXPLORER}/tx/${receipt.hash}`;
+    const message = `@${fromHandle.data[0].username} merged ${tokenIds.join(" + ")} to get Card ID: ${newTokenId} ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     await _twitter.v2.reply(message, _tweet.data.id);
     // reply with card
     await displayCard(_twitter, _tweet, newTokenId);

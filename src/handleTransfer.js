@@ -1,4 +1,4 @@
-const { contract } = require("./contract.js");
+const { contract } = require("./contract");
 
 /*
  * When player tweets "@dexoshi transfer 0xAlice 1 1", reply with tx hash
@@ -18,9 +18,9 @@ module.exports = async function handleTransfer(_twitter, _tweet) {
     // get amount
     const amount = _tweet.data.text.split(" ")[4];
     // call "adminSafeTransferFrom"
-    const receipt = await contract["adminSafeTransferFrom"](fromAddress, toAddress, tokenId, amount);
+    const { hash } = await contract["adminSafeTransferFrom"](fromAddress, toAddress, tokenId, amount);
     // reply with tx hash
-    const message = `@${fromHandle.data[0].username} transfered ID: ${tokenId} to ${toAddress}. ${process.env.BLOCK_EXPLORER}/tx/${receipt.hash}`;
+    const message = `@${fromHandle.data[0].username} transfered Card ID: ${tokenId} to ${toAddress}. ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     await _twitter.v2.reply(message, _tweet.data.id);
   } catch (err) {
     console.error(err);

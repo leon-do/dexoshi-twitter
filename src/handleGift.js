@@ -1,5 +1,5 @@
-const { contract } = require("./contract.js");
-const displayCard = require("./displayCard.js");
+const { contract } = require("./contract");
+const displayCard = require("./displayCard");
 
 /*
  * When player tweets "@dexoshi gift @elonmusk", reply with tx hash
@@ -21,9 +21,9 @@ module.exports = async function handleGift(_twitter, _tweet) {
     // get tokenId
     const tokenId = _tweet.data.text.split(" ")[3];
     // call "adminSafeTransferFrom"
-    const receipt = await contract["adminSafeTransferFrom"](fromAddress, toAddress, tokenId, 1);
+    const { hash } = await contract["adminSafeTransferFrom"](fromAddress, toAddress, tokenId, 1);
     // reply with tx hash
-    const message = `@${fromHandle.data[0].username} transfered ID: ${tokenId} to @${toHandle}. ${process.env.BLOCK_EXPLORER}/tx/${receipt.hash}`;
+    const message = `@${fromHandle.data[0].username} gifted ID: ${tokenId} to @${toHandle}. ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     await _twitter.v2.reply(message, _tweet.data.id);
     // display card
     await displayCard(_twitter, _tweet, tokenId);

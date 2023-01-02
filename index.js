@@ -5,19 +5,28 @@ const handleGift = require("./src/handleGift");
 const handleHelp = require("./src/handleHelp");
 const handleInfo = require("./src/handleInfo");
 const handleMerge = require("./src/handleMerge");
+const handleMint = require("./src/handleMint");
 const handleTransfer = require("./src/handleTransfer");
 
 main();
 async function main() {
+  // get twitter handle: @dexoshi
+  const adminHandle = `@${(await twitter.currentUserV2()).data.username}`;
+
   // https://github.com/PLhery/node-twitter-api-v2/blob/36821932dbde93129168e8b47af4e1e377552bde/doc/basics.md#create-a-client
   const login = await twitter.appLogin();
 
   // https://github.com/PLhery/node-twitter-api-v2/blob/05c5c1f8c3b13d49f38126fe37a8faa675b53e88/doc/examples.md#stream-tweets-in-real-time
-  await login.v2.streamRules();
+  const rules = await login.v2.streamRules();
 
-  // Add rules
+  // delete existing rules
   await login.v2.updateStreamRules({
-    add: [{ value: "@dexoshi" }],
+    delete: { ids: rules.data.map((rule) => rule.id) },
+  });
+
+  // add new rules
+  await login.v2.updateStreamRules({
+    add: [{ value: adminHandle, tag: adminHandle }],
   });
 
   // https://github.com/PLhery/node-twitter-api-v2/blob/c8dacc7c0f85bc45a41c678dfeee1ebde31dd451/doc/streaming.md#specific-api-v2-implementations
@@ -30,21 +39,14 @@ async function main() {
   stream.autoReconnect = true;
 
   stream.on("data event content", async (tweet) => {
-    // Ignore retweets or self-sent tweets
-    const isRetweet = tweet.data.referenced_tweets?.some((_tweet) => tweet.type === "retweeted") ?? false;
-    if (isRetweet || tweet.data.author_id === twitter.currentUser()) return;
-
     // console.log("\n", JSON.stringify(tweet, null, 2));
-
-    // example tweet to get info: "@dexoshi info"
-    const command = tweet.data.text.split(" ")[1];
-
-    // the 🥩 & 🥔
-    if (command === "burn") handleBurn(twitter, tweet);
-    if (command === "gift") handleGift(twitter, tweet);
-    if (command === "help") handleHelp(twitter, tweet);
-    if (command === "info") handleInfo(twitter, tweet);
-    if (command === "merge") handleMerge(twitter, tweet);
-    if (command === "transfer") handleTransfer(twitter, tweet);
+    // Example: if tweet === "@dexoshi mint" then handelMint(). the 🥩 & 🥔
+    if (tweet.data.text.indexOf(`${adminHandle} burn`) === 0) handleBurn(twitter, tweet);
+    if (tweet.data.text.indexOf(`${adminHandle} gift`) === 0) handleGift(twitter, tweet);
+    if (tweet.data.text.indexOf(`${adminHandle} help`) === 0) handleHelp(twitter, tweet);
+    if (tweet.data.text.indexOf(`${adminHandle} info`) === 0) handleInfo(twitter, tweet);
+    if (tweet.data.text.indexOf(`${adminHandle} merge`) === 0) handleMerge(twitter, tweet);
+    if (tweet.data.text.indexOf(`${adminHandle} transfer`) === 0) handleTransfer(twitter, tweet);
+    if (tweet.data.text.indexOf(`RT ${adminHandle}: ${adminHandle} mint`) === 0) handleMint(twitter, tweet);
   });
 }

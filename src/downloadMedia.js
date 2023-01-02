@@ -3,8 +3,8 @@ const axios = require("axios");
 
 /*
  * @param {string} _url - https://i.imgur.com/Xs2XCZd.jpeg
- * download media from url
- * @returns {Promise<path>}
+ * download media and store in media folder
+ * @returns {Promise<path of file>} 
  * */
 module.exports = async function getFile(_url) {
   try {

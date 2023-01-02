@@ -1,4 +1,4 @@
-const { contract } = require("./contract.js");
+const { contract } = require("./contract");
 
 /*
  * When player tweets "@dexoshi burn 1", burn token & reply with tx hash
@@ -14,9 +14,9 @@ module.exports = async function handleBurn(_twitter, _tweet) {
     // get token id to burn
     const tokenId = _tweet.data.text.split(" ")[2];
     // call "adminSafeTransferFrom"
-    const receipt = await contract["adminBurn"](fromAddress, tokenId, 1);
+    const { hash } = await contract["adminBurn"](fromAddress, tokenId, 1);
     // reply with tx hash
-    const message = `@${fromHandle.data[0].username} burnt ID: ${tokenId}. ${process.env.BLOCK_EXPLORER}/tx/${receipt.hash}`;
+    const message = `@${fromHandle.data[0].username} burnt Card ID: ${tokenId}. ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     await _twitter.v2.reply(message, _tweet.data.id);
   } catch (err) {
     console.error(err);
