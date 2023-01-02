@@ -1,6 +1,5 @@
 const { contract } = require("./contract");
 const displayCard = require("./displayCard");
-const metadata = require("./metadata.json");
 
 /*
  * Example tweet to mint: "RT @dexoshi: @dexoshi mint 8"
@@ -22,10 +21,9 @@ module.exports = async function handleMint(_twitter, _tweet) {
   const toHandle = await _twitter.v2.users([_tweet.data.author_id]);
   // get tokenId from command: "RT @dexoshi: @dexoshi mint 8"
   const tokenId = _tweet.data.text.split(" ")[4];
-  // get metadata tokenURI gateway
-  const tokenURI = metadata[tokenId].gateway;
-  // call "mint" to mint the card
-  const { hash } = await contract["adminMint"](toAddress, tokenId, 1, tokenURI);
+  // mint new token
+  const tokenUri = `${process.env.TOKEN_URI}/${String(newTokenId).padStart(5, "0")}.json`;
+  const { hash } = await contract["adminMint"](address, newTokenId, 1, tokenUri);
   // reply with tx hash
   const message = `Card ID: ${tokenId} is minted to @${toHandle.data[0].username}. ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
   await _twitter.v2.reply(message, _tweet.data.id);

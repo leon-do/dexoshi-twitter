@@ -9,7 +9,7 @@ const deleteMedia = require("./deleteMedia");
  * @param {String} _tokenId - Token ID of card
  * */
 module.exports = async function displayCard(_twitter, _tweet, _tokenId) {
-  const imageUri = metadata[_tokenId].gateway;
+  const imageUri = metadata[_tokenId].cacheImage;
   const name = metadata[_tokenId].description;
   let mediaPath;
   try {
