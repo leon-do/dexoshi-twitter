@@ -19,8 +19,7 @@ module.exports = async function handleMint(_twitter, _tweet) {
   // get description
   const description = metadata[tokenId].description;
   // mint new token
-  const tokenUri = `${process.env.TOKEN_URI}/${String(tokenId).padStart(5, "0")}.json`;
-  const { hash } = await contract["adminMint"](toAddress, tokenId, 1, tokenUri);
+  const { hash } = await contract["adminMint"](toAddress, tokenId, 1);
   // reply with tx hash
   const message = `@${toHandle.data[0].username} recieved \nName: ${description} \nCard ID: ${tokenId} ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
   // display card

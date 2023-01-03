@@ -27,8 +27,7 @@ module.exports = async function handleMerge(_twitter, _tweet) {
     // get descripton 
     const description = metadata[tokenId].description;
     // mint new token
-    const tokenUri = `${process.env.TOKEN_URI}/${String(newTokenId).padStart(5, "0")}.json`;
-    const { hash } = await contract["adminMint"](address, newTokenId, 1, tokenUri);
+    const { hash } = await contract["adminMint"](address, newTokenId, 1);
     // reply with tx hash
     const message = `@${fromHandle.data[0].username} merged ${tokenIds.join(" + ")} to get \nName: ${description} \nCard ID: ${newTokenId} ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     // reply with card

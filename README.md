@@ -19,10 +19,8 @@
 @dexoshi burn <TOKEN_ID>
 ```
 
-## Notes
+## JSON Links
 
-https://nftstorage.link/ipfs/bafybeie7bjhof6patydr7i6nv5cj4tbujz2t3ahazxaie5rvyjdnduoq4m/16103.json
+https://gitlab.com/dexoshi/metadata/-/raw/main/json/{id}.json
 
-https://bafybeicp7ku5ls4e2mab42lobr3a7vviuzus26v3kz5vjjbkdcfvcsu5om.ipfs.nftstorage.link/16103.png
-
-https://testnets.opensea.io/assets/goerli/0x123663D6636E6AA4E22B98f3ED52cdAda8935df8/1
+https://bafybeigjdnphukqz7scqwp3em5niqcupdispcjdoeqai6x2d7iypxkjexi.ipfs.nftstorage.link/{id}.json 
