@@ -23,4 +23,4 @@
 
 https://gitlab.com/dexoshi/metadata/-/raw/main/json/{id}.json
 
-https://bafybeigjdnphukqz7scqwp3em5niqcupdispcjdoeqai6x2d7iypxkjexi.ipfs.nftstorage.link/{id}.json 
+ipfs://bafybeigjdnphukqz7scqwp3em5niqcupdispcjdoeqai6x2d7iypxkjexi/{id}.json
