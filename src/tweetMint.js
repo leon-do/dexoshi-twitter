@@ -6,7 +6,7 @@ const metadata = require("./metadata.json");
 async function tweetMint() {
   const tokenId = 55;
   const description = metadata[tokenId].description
-  const message = `@dexoshi mint available \nName: ${description} \nCard ID: ${tokenId}. \n\nRetweet to claim`;
+  const message = `@dexoshi mint ${tokenId} available \nName: ${description} \nCard ID: ${tokenId}. \n\nRetweet to claim`;
   tweetWithCard(twitter, message, tokenId);
 }
 
