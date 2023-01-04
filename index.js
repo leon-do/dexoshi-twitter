@@ -10,17 +10,17 @@ const handleMerge = require("./src/handleMerge");
 const handleMint = require("./src/handleMint");
 const handleTransfer = require("./src/handleTransfer");
 
-// startMinter();
+startMinter();
 startListener();
 
-tweetMint()
 /*
- * Start minting every 5 minutes
+ * Start minting every x minutes
  */
 async function startMinter() {
+  const minutes = 5;
   setInterval(async () => {
     await tweetMint();
-  }, 1000 * 60 * 5);
+  }, 1000 * 60 * minutes);
 }
 
 /*

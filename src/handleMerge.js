@@ -29,7 +29,7 @@ module.exports = async function handleMerge(_twitter, _tweet) {
     // mint new token
     const { hash } = await contract["adminMint"](address, newTokenId, 1);
     // reply with tx hash
-    const message = `@${fromHandle.data[0].username} merged ${tokenIds.join(" + ")} to get \nName: ${description} \nCard ID: #${newTokenId} ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
+    const message = `@${fromHandle.data[0].username} merged ${tokenIds.join(" + ")} to get \nName: ${description} \nCard ID: #${newTokenId} \n${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     // reply with card
     await replyWithCard(_twitter, _tweet, message, newTokenId);
   } catch (err) {

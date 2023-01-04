@@ -16,7 +16,7 @@ module.exports = async function handleBurn(_twitter, _tweet) {
     // call "adminSafeTransferFrom"
     const { hash } = await contract["adminBurn"](fromAddress, tokenId, 1);
     // reply with tx hash
-    const message = `@${fromHandle.data[0].username} burnt Card ID: #${tokenId}. ${process.env.BLOCK_EXPLORER}/tx/${hash}`;
+    const message = `@${fromHandle.data[0].username} burnt Card ID: #${tokenId} \n${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     await _twitter.v2.reply(message, _tweet.data.id);
   } catch (err) {
     console.error(err);
