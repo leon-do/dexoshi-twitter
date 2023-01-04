@@ -24,3 +24,7 @@
 https://gitlab.com/dexoshi/metadata/-/raw/main/json/{id}.json
 
 ipfs://bafybeigjdnphukqz7scqwp3em5niqcupdispcjdoeqai6x2d7iypxkjexi/{id}.json
+
+## Deployment
+
+replit.com
