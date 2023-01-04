@@ -13,6 +13,7 @@ const handleTransfer = require("./src/handleTransfer");
 // startMinter();
 startListener();
 
+tweetMint()
 /*
  * Start minting every 5 minutes
  */
