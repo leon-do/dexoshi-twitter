@@ -7,16 +7,16 @@
 @dexoshi info <@TWITTER_HANDLE>
 
 🎁 Gift token
-@dexoshi gift <@TWITTER_HANDLE> <TOKEN_ID>
+@dexoshi gift <@TWITTER_HANDLE> <CARD_ID>
 
 🫶 Merge token 2 + 3 = 6
-@dexoshi burn <TOKEN_ID_1> <TOKEN_ID_2>
+@dexoshi merge <CARD_ID_1> <CARD_ID_2>
 
 📨 Transfer to address
-@dexoshi transfer <0xADDRESS> <TOKEN_ID> <AMOUNT>
+@dexoshi transfer <0xADDRESS> <CARD_ID> <AMOUNT>
 
 🔥 Burn token
-@dexoshi burn <TOKEN_ID>
+@dexoshi burn <CARD_ID>
 ```
 
 ## JSON Links

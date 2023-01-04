@@ -1,5 +1,7 @@
 require("dotenv").config();
+require("./src/expressServer");
 const twitter = require("./src/twitter");
+const tweetMint = require("./src/tweetMint");
 const handleBurn = require("./src/handleBurn");
 const handleGift = require("./src/handleGift");
 const handleHelp = require("./src/handleHelp");
@@ -8,8 +10,22 @@ const handleMerge = require("./src/handleMerge");
 const handleMint = require("./src/handleMint");
 const handleTransfer = require("./src/handleTransfer");
 
-main();
-async function main() {
+// startMinter();
+startListener();
+
+/*
+ * Start minting every 5 minutes
+ */
+async function startMinter() {
+  setInterval(async () => {
+    await tweetMint();
+  }, 1000 * 60 * 5);
+}
+
+/*
+ * Start listening for tweets and handle them
+ */
+async function startListener() {
   // get twitter handle: @dexoshi
   const adminHandle = `@${(await twitter.currentUserV2()).data.username}`;
 
