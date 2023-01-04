@@ -14,7 +14,7 @@ startMinter();
 startListener();
 
 /*
- * Start minting every x minutes
+ * Start minting every interval 
  */
 async function startMinter() {
   const hours = 3;
