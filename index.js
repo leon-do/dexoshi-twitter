@@ -17,7 +17,7 @@ startListener();
  * Start minting every x minutes
  */
 async function startMinter() {
-  const minutes = 30;
+  const minutes = 60;
   setInterval(async () => {
     await tweetMint();
   }, 1000 * 60 * minutes);
