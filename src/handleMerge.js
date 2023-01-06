@@ -24,7 +24,7 @@ module.exports = async function handleMerge(_twitter, _tweet) {
     await burnTokens(address, tokenIds);
     // calculate new tokenId
     const newTokenId = tokenIds.reduce((a, b) => Number(a) * Number(b), 1) % metadata.length;
-    // get descripton 
+    // get descripton
     const description = metadata[tokenId].description;
     // mint new token
     const { hash } = await contract["adminMint"](address, newTokenId, 1);
@@ -33,7 +33,7 @@ module.exports = async function handleMerge(_twitter, _tweet) {
     // reply with card
     await replyWithCard(_twitter, _tweet, message, newTokenId);
   } catch (err) {
-    console.error(err);
+    console.error("handleMerge", err);
     _twitter.v2.reply("Error Code: 1098445789368479744", _tweet.data.id);
   }
 };

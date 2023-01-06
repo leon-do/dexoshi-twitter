@@ -30,7 +30,7 @@ module.exports = async function handleGift(_twitter, _tweet) {
     // display card
     await replyWithCard(_twitter, _tweet, message, tokenId);
   } catch (err) {
-    console.error(err);
+    console.error("handleGift error:", err);
     _twitter.v2.reply("Error Code: 900437084321832960", _tweet.data.id);
   }
 };

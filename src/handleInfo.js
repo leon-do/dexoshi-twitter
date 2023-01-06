@@ -20,6 +20,7 @@ module.exports = async function handleInfo(_twitter, _tweet) {
     // reply with cards
     await displayCards(_twitter, _tweet, address);
   } catch (err) {
+    console.error("handleInfo error:", err);
     _twitter.v2.reply("Error Code: 1101264495337365504", _tweet.data.id);
   }
 };

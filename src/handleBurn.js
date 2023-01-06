@@ -19,7 +19,7 @@ module.exports = async function handleBurn(_twitter, _tweet) {
     const message = `@${fromHandle.data[0].username} burnt Card ID: #${tokenId} \n${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     await _twitter.v2.reply(message, _tweet.data.id);
   } catch (err) {
-    console.error(err);
+    console.error("handleBurn error:", err);
     _twitter.v2.reply("Error Code: 1022028994772910086", _tweet.data.id);
   }
 };
