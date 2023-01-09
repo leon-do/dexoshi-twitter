@@ -29,7 +29,7 @@ module.exports = async function handleMint(_twitter, _tweet) {
     // display card
     await replyWithCard(_twitter, _tweet, message, tokenId);
   } catch (error) {
-    console.error("handleMint error:", err);
+    console.error("handleMint error:", error);
     _twitter.v2.reply("Error Code: 862675563693125632", _tweet.data.id);
   }
 };
