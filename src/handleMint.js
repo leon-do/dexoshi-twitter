@@ -28,8 +28,8 @@ module.exports = async function handleMint(_twitter, _tweet) {
     const message = `@${toHandle.data[0].username} recieved \nName: ${description} \nCard ID: #${tokenId} \nAmount: ${randomAmount} \n${process.env.BLOCK_EXPLORER}/tx/${hash}`;
     // display card
     await replyWithCard(_twitter, _tweet, message, tokenId);
-  } catch (error) {
-    console.error("handleMint error:", error);
+  } catch (err) {
+    console.error("handleMint error:", err);
     _twitter.v2.reply("Error Code: 862675563693125632", _tweet.data.id);
   }
 };
